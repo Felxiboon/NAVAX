@@ -1,179 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>NAVAX</title>
-  <style>
-    :root{
-      --bg: #070403;
-      --bg-2: #0e0807;
-      --line: #2c1315;
-      --ink: #f3e9e7;
-      --ink-dim: #a08886;
-      --red: #7a1512;
-      --red-bright: #e2261c;
-      --red-glow: rgba(226,38,28,0.45);
-    }
+<meta charset="UTF-8">
+<title>Northstar</title>
+<!-- Hero photo: "Coast near Great Skorbeevsky Cape", Rybachy Peninsula, Murmansk Oblast, Russia.
+     Photo by SnapSaga on Unsplash — free to use under the Unsplash License. -->
+<style>
+  :root{
+    --bg: #05100a;
+    --bg-2: #0b1810;
+    --line: #1e3324;
+    --ink: #eef3ec;
+    --ink-dim: #92a696;
+    --green: #2f6b45;
+    --green-bright: #57c278;
+    --green-glow: rgba(87,194,120,0.45);
+  }
 
-    *{ box-sizing: border-box; }
+  *{ box-sizing: border-box; }
 
-    body{
-      margin:0;
-      min-height:100vh;
-      background:
-        radial-gradient(1100px 550px at 88% -8%, rgba(226,38,28,0.16), transparent 60%),
-        var(--bg);
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      color: var(--ink);
-      padding: 40px 32px;
-    }
+  body{
+    margin:0;
+    background: var(--bg);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+  }
 
-    .navax-header{
-      display:flex;
-      justify-content: space-between;
-      align-items:center;
-      max-width: 1000px;
-      margin: 0 auto 60px;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
+  /* ---- hero: coastline photo + green scrim ---- */
+  .hero{
+    position: relative;
+    min-height: 440px;
+    background-image:
+      linear-gradient(180deg, rgba(5,16,10,0.75) 0%, rgba(5,16,10,0.25) 210px, rgba(5,16,10,0.15) 380px, var(--bg) 100%),
+      linear-gradient(120deg, rgba(20,60,35,0.35), rgba(5,16,10,0.1)),
+      url('https://images.unsplash.com/photo-1693417793767-6ca227cbc6f1?auto=format&fit=crop&w=2000&q=80');
+    background-size: cover, cover, cover;
+    background-position: center, center, center;
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 40px 32px 56px;
+  }
 
-    .navax-logo{
-      font-family: Georgia, 'Times New Roman', serif;
-      font-weight: 700;
-      font-size: 1.3rem;
-      letter-spacing: 0.06em;
-    }
-    .navax-logo span{ color: var(--red-bright); }
+  .navax-header{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    gap: 20px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
+  }
 
-    /* ---- slanted tab nav, top right ---- */
-    .tab-nav{
-      display:flex;
-      align-items:center;
-      gap: 7px;
-    }
+  .navax-logo{
+    font-family: Georgia, 'Times New Roman', serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    letter-spacing: 0.06em;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+  }
+  .navax-logo .star{ color: var(--green-bright); margin-right: 8px; }
 
-    .tab-btn{
-      appearance:none;
-      border:none;
-      cursor:pointer;
-      font-family: 'Arial Narrow', Arial, sans-serif;
-      font-weight: 700;
-      font-size: 0.8rem;
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
-      color: var(--ink-dim);
-      background: linear-gradient(180deg, #170b0a, #0b0504);
-      border: 1px solid var(--line);
-      padding: 13px 30px 13px 24px;
-      clip-path: polygon(16px 0, 100% 0, calc(100% - 16px) 100%, 0 100%);
-      transition: color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-    }
+  /* ---- slanted tab nav, top right ---- */
+  .tab-nav{
+    display:flex;
+    align-items:center;
+    gap: 7px;
+  }
 
-    .tab-btn .tick{
-      font-size: 0.68rem;
-      color: var(--red-bright);
-      margin-right: 8px;
-      font-weight: 700;
-      opacity: 0.85;
-    }
+  .tab-btn{
+    appearance:none;
+    border:none;
+    cursor:pointer;
+    font-family: 'Arial Narrow', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    background: linear-gradient(180deg, rgba(10,22,15,0.9), rgba(5,14,9,0.85));
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 13px 30px 13px 24px;
+    clip-path: polygon(16px 0, 100% 0, calc(100% - 16px) 100%, 0 100%);
+    transition: color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    backdrop-filter: blur(2px);
+  }
 
-    .tab-btn:hover{
-      color: var(--ink);
-      border-color: rgba(226,38,28,0.45);
-    }
+  .tab-btn .tick{
+    font-size: 0.68rem;
+    color: var(--green-bright);
+    margin-right: 8px;
+    font-weight: 700;
+    opacity: 0.9;
+  }
 
-    .tab-btn.is-active{
-      color: #fff;
-      background: linear-gradient(180deg, var(--red-bright), var(--red));
-      border-color: transparent;
-      box-shadow:
-        0 1px 0 rgba(255,255,255,0.2) inset,
-        0 8px 20px -8px var(--red-glow);
-    }
+  .tab-btn:hover{
+    color: var(--ink);
+    border-color: rgba(87,194,120,0.5);
+  }
 
-    .tab-btn.is-active .tick{
-      color: rgba(255,255,255,0.75);
-      opacity: 1;
-    }
+  .tab-btn.is-active{
+    color: #06120b;
+    background: linear-gradient(180deg, var(--green-bright), var(--green));
+    border-color: transparent;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.25) inset,
+      0 8px 20px -8px var(--green-glow);
+  }
 
-    /* ---- content panel ---- */
-    .panel{
-      max-width: 1000px;
-      margin: 0 auto;
-      min-height: 300px;
-      border: 1px solid var(--line);
-      border-left: 3px solid var(--red-bright);
-      border-radius: 6px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.015), transparent 40%), var(--bg-2);
-      padding: 48px;
-    }
+  .tab-btn.is-active .tick{ color: rgba(6,18,11,0.6); }
 
-    .panel h1{
-      font-family: Georgia, serif;
-      font-size: 2rem;
-      margin: 0 0 14px;
-    }
+  .hero-copy{
+    position: relative;
+    z-index: 2;
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+  }
 
-    .panel p{
-      color: var(--ink-dim);
-      line-height: 1.6;
-      max-width: 60ch;
-      margin: 0;
-    }
+  .hero-kicker{
+    color: var(--green-bright);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+  }
 
-    @media (max-width: 560px){
-      .navax-header{ justify-content:center; text-align:center; }
-      .panel{ padding: 32px 24px; }
-      .tab-btn{ clip-path:none; border-radius:4px; padding:12px 18px; }
-    }
-  </style>
+  .hero-copy h1{
+    font-family: Georgia, serif;
+    font-size: 2.4rem;
+    margin: 0 0 8px;
+    text-shadow: 0 2px 14px rgba(0,0,0,0.55);
+    max-width: 20ch;
+  }
+
+  .hero-copy p{
+    color: rgba(238,243,236,0.82);
+    max-width: 46ch;
+    line-height: 1.5;
+    margin:0;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  }
+
+  /* ---- content panel ---- */
+  .panel-wrap{ padding: 48px 32px; }
+
+  .panel{
+    max-width: 1100px;
+    margin: 0 auto;
+    min-height: 260px;
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--green-bright);
+    border-radius: 6px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent 40%), var(--bg-2);
+    padding: 44px 48px;
+  }
+
+  .panel h2{
+    font-family: Georgia, serif;
+    font-size: 1.7rem;
+    margin: 0 0 12px;
+  }
+
+  .panel p{
+    color: var(--ink-dim);
+    line-height: 1.6;
+    max-width: 60ch;
+    margin: 0;
+  }
+
+  @media (max-width: 640px){
+    .navax-header{ justify-content:center; text-align:center; }
+    .hero{ min-height: 480px; padding: 32px 20px 40px; }
+    .hero-copy{ text-align:center; }
+    .hero-copy h1{ max-width: none; font-size: 1.9rem; }
+    .hero-copy p{ max-width: none; margin: 0 auto; }
+    .tab-btn{ clip-path:none; border-radius:4px; padding:11px 16px; }
+    .panel{ padding: 32px 24px; }
+  }
+</style>
 </head>
 <body>
 
-  <div class="navax-header">
-    <div class="navax-logo">NAV<span>AX</span></div>
+  <div class="hero">
+    <div class="navax-header">
+      <div class="navax-logo"><span class="star">✦</span>NORTHSTAR</div>
 
-    <nav class="tab-nav" role="tablist" aria-label="Site sections">
-      <button class="tab-btn is-active" role="tab" aria-selected="true" data-tab="about">
-        <span class="tick">01</span>About
-      </button>
-      <button class="tab-btn" role="tab" aria-selected="false" data-tab="funding">
-        <span class="tick">02</span>Funding
-      </button>
-      <button class="tab-btn" role="tab" aria-selected="false" data-tab="updates">
-        <span class="tick">03</span>Updates
-      </button>
-    </nav>
+      <nav class="tab-nav" role="tablist" aria-label="Site sections">
+        <button class="tab-btn is-active" role="tab" aria-selected="true" data-tab="about">
+          <span class="tick">01</span>About
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" data-tab="funding">
+          <span class="tick">02</span>Funding
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" data-tab="updates">
+          <span class="tick">03</span>Updates
+        </button>
+      </nav>
+    </div>
+
+    <div class="hero-copy">
+      <div class="hero-kicker">Survival, adrift</div>
+      <h1>Northstar</h1>
+      <p>An immersive Roblox survival game currently in development.</p>
+    </div>
   </div>
 
-  <div class="panel" id="panel">
-    <h1 id="panel-title">About</h1>
-    <p id="panel-body">NAVAX is an immersive Roblox survival game currently in development.</p>
+  <div class="panel-wrap">
+    <div class="panel" id="panel">
+      <h2 id="panel-title">About</h2>
+      <p id="panel-body">Northstar is an immersive Roblox survival game currently in development.</p>
+    </div>
   </div>
 
-  <script>
-    const tabs = document.querySelectorAll('.tab-btn');
-    const title = document.getElementById('panel-title');
-    const body = document.getElementById('panel-body');
+<script>
+  const tabs = document.querySelectorAll('.tab-btn');
+  const title = document.getElementById('panel-title');
+  const body = document.getElementById('panel-body');
 
-    const content = {
-      about: { title: 'About', body: 'NAVAX is an immersive Roblox survival game currently in development.' },
-      funding: { title: 'Funding', body: 'Support the project to help fund development, assets, and future updates.' },
-      updates: { title: 'Updates', body: 'Follow along here as new features, assets, and builds get shipped.' }
-    };
+  const content = {
+    about: { title: 'About', body: 'Northstar is an immersive Roblox survival game currently in development.' },
+    funding: { title: 'Funding', body: 'Support the project to help fund development, assets, and future updates.' },
+    updates: { title: 'Updates', body: 'Follow along here as new features, assets, and builds get shipped.' }
+  };
 
-    tabs.forEach(btn => {
-      btn.addEventListener('click', () => {
-        tabs.forEach(b => { b.classList.remove('is-active'); b.setAttribute('aria-selected','false'); });
-        btn.classList.add('is-active');
-        btn.setAttribute('aria-selected','true');
-        const data = content[btn.dataset.tab];
-        title.textContent = data.title;
-        body.textContent = data.body;
-      });
+  tabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabs.forEach(b => { b.classList.remove('is-active'); b.setAttribute('aria-selected','false'); });
+      btn.classList.add('is-active');
+      btn.setAttribute('aria-selected','true');
+      const data = content[btn.dataset.tab];
+      title.textContent = data.title;
+      body.textContent = data.body;
     });
-  </script>
+  });
+</script>
 
 </body>
 </html>
