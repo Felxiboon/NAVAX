@@ -1,16 +1,179 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>NAVAX</title>
+  <meta charset="UTF-8">
+  <title>NAVAX</title>
+  <style>
+    :root{
+      --bg: #070403;
+      --bg-2: #0e0807;
+      --line: #2c1315;
+      --ink: #f3e9e7;
+      --ink-dim: #a08886;
+      --red: #7a1512;
+      --red-bright: #e2261c;
+      --red-glow: rgba(226,38,28,0.45);
+    }
+
+    *{ box-sizing: border-box; }
+
+    body{
+      margin:0;
+      min-height:100vh;
+      background:
+        radial-gradient(1100px 550px at 88% -8%, rgba(226,38,28,0.16), transparent 60%),
+        var(--bg);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: var(--ink);
+      padding: 40px 32px;
+    }
+
+    .navax-header{
+      display:flex;
+      justify-content: space-between;
+      align-items:center;
+      max-width: 1000px;
+      margin: 0 auto 60px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .navax-logo{
+      font-family: Georgia, 'Times New Roman', serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      letter-spacing: 0.06em;
+    }
+    .navax-logo span{ color: var(--red-bright); }
+
+    /* ---- slanted tab nav, top right ---- */
+    .tab-nav{
+      display:flex;
+      align-items:center;
+      gap: 7px;
+    }
+
+    .tab-btn{
+      appearance:none;
+      border:none;
+      cursor:pointer;
+      font-family: 'Arial Narrow', Arial, sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      background: linear-gradient(180deg, #170b0a, #0b0504);
+      border: 1px solid var(--line);
+      padding: 13px 30px 13px 24px;
+      clip-path: polygon(16px 0, 100% 0, calc(100% - 16px) 100%, 0 100%);
+      transition: color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .tab-btn .tick{
+      font-size: 0.68rem;
+      color: var(--red-bright);
+      margin-right: 8px;
+      font-weight: 700;
+      opacity: 0.85;
+    }
+
+    .tab-btn:hover{
+      color: var(--ink);
+      border-color: rgba(226,38,28,0.45);
+    }
+
+    .tab-btn.is-active{
+      color: #fff;
+      background: linear-gradient(180deg, var(--red-bright), var(--red));
+      border-color: transparent;
+      box-shadow:
+        0 1px 0 rgba(255,255,255,0.2) inset,
+        0 8px 20px -8px var(--red-glow);
+    }
+
+    .tab-btn.is-active .tick{
+      color: rgba(255,255,255,0.75);
+      opacity: 1;
+    }
+
+    /* ---- content panel ---- */
+    .panel{
+      max-width: 1000px;
+      margin: 0 auto;
+      min-height: 300px;
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--red-bright);
+      border-radius: 6px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.015), transparent 40%), var(--bg-2);
+      padding: 48px;
+    }
+
+    .panel h1{
+      font-family: Georgia, serif;
+      font-size: 2rem;
+      margin: 0 0 14px;
+    }
+
+    .panel p{
+      color: var(--ink-dim);
+      line-height: 1.6;
+      max-width: 60ch;
+      margin: 0;
+    }
+
+    @media (max-width: 560px){
+      .navax-header{ justify-content:center; text-align:center; }
+      .panel{ padding: 32px 24px; }
+      .tab-btn{ clip-path:none; border-radius:4px; padding:12px 18px; }
+    }
+  </style>
 </head>
-<body style="background:#111;color:white;font-family:Arial;text-align:center;padding:50px;">
-    <h1>NAVAX</h1>
-    <p>Welcome to the official NAVAX website.</p>
+<body>
 
-    <h2>About</h2>
-    <p>NAVAX is an immersive Roblox survival game currently in development.</p>
+  <div class="navax-header">
+    <div class="navax-logo">NAV<span>AX</span></div>
 
-    <h2>Funding</h2>
-    <p>Support the project to help fund development, assets, and future updates.</p>
+    <nav class="tab-nav" role="tablist" aria-label="Site sections">
+      <button class="tab-btn is-active" role="tab" aria-selected="true" data-tab="about">
+        <span class="tick">01</span>About
+      </button>
+      <button class="tab-btn" role="tab" aria-selected="false" data-tab="funding">
+        <span class="tick">02</span>Funding
+      </button>
+      <button class="tab-btn" role="tab" aria-selected="false" data-tab="updates">
+        <span class="tick">03</span>Updates
+      </button>
+    </nav>
+  </div>
+
+  <div class="panel" id="panel">
+    <h1 id="panel-title">About</h1>
+    <p id="panel-body">NAVAX is an immersive Roblox survival game currently in development.</p>
+  </div>
+
+  <script>
+    const tabs = document.querySelectorAll('.tab-btn');
+    const title = document.getElementById('panel-title');
+    const body = document.getElementById('panel-body');
+
+    const content = {
+      about: { title: 'About', body: 'NAVAX is an immersive Roblox survival game currently in development.' },
+      funding: { title: 'Funding', body: 'Support the project to help fund development, assets, and future updates.' },
+      updates: { title: 'Updates', body: 'Follow along here as new features, assets, and builds get shipped.' }
+    };
+
+    tabs.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabs.forEach(b => { b.classList.remove('is-active'); b.setAttribute('aria-selected','false'); });
+        btn.classList.add('is-active');
+        btn.setAttribute('aria-selected','true');
+        const data = content[btn.dataset.tab];
+        title.textContent = data.title;
+        body.textContent = data.body;
+      });
+    });
+  </script>
+
 </body>
 </html>
