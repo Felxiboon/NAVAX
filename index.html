@@ -19,14 +19,25 @@
 
   *{ box-sizing: border-box; }
 
+  html{ background: #05100a; }
+
   body{
     margin:0;
     background: var(--bg);
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     color: var(--ink);
+    animation: pageFadeIn 0.7s ease both;
   }
 
-  /* ---- hero: coastline photo + green scrim ---- */
+  @keyframes pageFadeIn{
+    from{ opacity: 0; transform: translateY(8px); }
+    to{ opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    body{ animation: none; }
+  }
+
   .hero{
     position: relative;
     min-height: 440px;
@@ -65,11 +76,11 @@
   }
   .navax-logo .star{ color: var(--green-bright); margin-right: 8px; }
 
-  /* ---- slanted tab nav, top right ---- */
+  /* ---- smooth rounded tab nav, top right ---- */
   .tab-nav{
     display:flex;
     align-items:center;
-    gap: 7px;
+    gap: 8px;
   }
 
   .tab-btn{
@@ -79,14 +90,14 @@
     font-family: 'Arial Narrow', Arial, sans-serif;
     font-weight: 700;
     font-size: 0.8rem;
-    letter-spacing: 0.09em;
+    letter-spacing: 0.07em;
     text-transform: uppercase;
     color: var(--ink-dim);
     background: linear-gradient(180deg, rgba(10,22,15,0.9), rgba(5,14,9,0.85));
     border: 1px solid rgba(255,255,255,0.12);
-    padding: 13px 30px 13px 24px;
-    clip-path: polygon(16px 0, 100% 0, calc(100% - 16px) 100%, 0 100%);
-    transition: color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    border-radius: 999px;
+    padding: 11px 22px;
+    transition: color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
     backdrop-filter: blur(2px);
   }
 
@@ -101,6 +112,7 @@
   .tab-btn:hover{
     color: var(--ink);
     border-color: rgba(87,194,120,0.5);
+    transform: translateY(-1px);
   }
 
   .tab-btn.is-active{
@@ -111,6 +123,8 @@
       0 1px 0 rgba(255,255,255,0.25) inset,
       0 8px 20px -8px var(--green-glow);
   }
+
+  .tab-btn.is-active:hover{ transform: none; }
 
   .tab-btn.is-active .tick{ color: rgba(6,18,11,0.6); }
 
@@ -148,7 +162,6 @@
     text-shadow: 0 2px 10px rgba(0,0,0,0.5);
   }
 
-  /* ---- content panel ---- */
   .panel-wrap{ padding: 48px 32px; }
 
   .panel{
@@ -175,14 +188,68 @@
     margin: 0;
   }
 
+  .panel p strong{
+    color: var(--green-bright);
+    font-weight: 700;
+  }
+
+  .panel p a{
+    color: var(--green-bright);
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(87,194,120,0.4);
+  }
+  .panel p a:hover{ border-bottom-color: var(--green-bright); }
+
+  /* ---- stat row: reflects the 4-faction / currency mechanic, About tab only ---- */
+  .stat-row{
+    display:flex;
+    gap: 36px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .stat{ min-width: 92px; }
+
+  .faction-ticks{
+    display:flex;
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+
+  .faction-ticks span{
+    width: 16px;
+    height: 5px;
+    border-radius: 3px;
+    background: var(--green-bright);
+    opacity: 0.85;
+  }
+
+  .stat-value{
+    font-family: Georgia, serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .stat-label{
+    font-size: 0.72rem;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+  }
+
   @media (max-width: 640px){
     .navax-header{ justify-content:center; text-align:center; }
     .hero{ min-height: 480px; padding: 32px 20px 40px; }
     .hero-copy{ text-align:center; }
     .hero-copy h1{ max-width: none; font-size: 1.9rem; }
     .hero-copy p{ max-width: none; margin: 0 auto; }
-    .tab-btn{ clip-path:none; border-radius:4px; padding:11px 16px; }
+    .tab-btn{ padding:10px 16px; }
     .panel{ padding: 32px 24px; }
+    .stat-row{ justify-content:center; gap:28px; }
   }
 </style>
 </head>
@@ -206,40 +273,85 @@
     </div>
 
     <div class="hero-copy">
-      <div class="hero-kicker">Survival, adrift</div>
+      <div class="hero-kicker">Four factions, one treasury</div>
       <h1>Northstar</h1>
-      <p>An immersive Roblox survival PVP faction based game that is currently in development.</p>
+      <p>An immersive Roblox PvP game where four rival factions battle for control — currently in development.</p>
     </div>
   </div>
 
   <div class="panel-wrap">
     <div class="panel" id="panel">
-      <h2 id="panel-title">About</h2>
-      <p id="panel-body">Northstar is an immersive Roblox game that has four factions that are competing in a race to who is the best. Each faction starts off with one million in currency, then each 5 months whatever faction has the most money gets a major advantage in whatever they want.</p>
-    </div> 
+      <h2 id="panel-title"></h2>
+      <p id="panel-body"></p>
+      <div class="stat-row" id="panel-stats">
+        <div class="stat">
+          <div class="faction-ticks"><span></span><span></span><span></span><span></span></div>
+          <div class="stat-value">4</div>
+          <div class="stat-label">Factions</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">$1M</div>
+          <div class="stat-label">Starting treasury</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">5mo</div>
+          <div class="stat-label">Cycle length</div>
+        </div>
+      </div>
+    </div>
   </div>
 
 <script>
   const tabs = document.querySelectorAll('.tab-btn');
   const title = document.getElementById('panel-title');
   const body = document.getElementById('panel-body');
+  const stats = document.getElementById('panel-stats');
 
+  // Single source of truth: every tab's text lives here, and ONLY here.
+  // The HTML above starts with empty <h2>/<p> tags on purpose — this script
+  // fills them in on load AND on every click, from this same object. Edit
+  // text here and it'll be correct everywhere, including switching back to
+  // a tab you already visited.
+  //
+  // These are double-quoted strings, so normal apostrophes (it's, don't) are
+  // safe to type. Just don't put a literal " character inside one — that's
+  // the only thing that breaks it.
   const content = {
-    about: { title: 'About', body: 'Northstar is an immersive Roblox survival game currently in development.' },
-    funding: { title: 'Funding', body: 'Support the project by helping fund development, assets, and future updates. If you d like to contribute, send a private message to Flexiboon on Discord you may receive exclusive in game benefits as a thank you.' },
-    updates: { title: 'Updates', body: 'Follow along here as new features, assets, and builds get shipped.' }
+    about: {
+      title: "About",
+      body: "Northstar drops four rival factions into one shared economy. Whichever faction is holding the most money when the cycle turns takes a major advantage over the rest.",
+      showStats: true
+    },
+    funding: {
+      title: "Funding",
+      body: "Support the project by helping fund development, assets, and future updates. DM <strong>Flexiboon</strong> on Discord to contribute — you may receive exclusive in-game perks as a thank-you.",
+      showStats: false
+    },
+    updates: {
+      title: "Updates",
+      body: "Use this invite link to see updates on development: <a href=\"https://discord.gg/9MdMvchxhG\" target=\"_blank\" rel=\"noopener noreferrer\">https://discord.gg/9MdMvchxhG</a>",
+      showStats: false
+    }
   };
+
+  function showTab(key){
+    const data = content[key];
+    title.textContent = data.title;
+    body.innerHTML = data.body;
+    stats.style.display = data.showStats ? 'flex' : 'none';
+  }
 
   tabs.forEach(btn => {
     btn.addEventListener('click', () => {
       tabs.forEach(b => { b.classList.remove('is-active'); b.setAttribute('aria-selected','false'); });
       btn.classList.add('is-active');
       btn.setAttribute('aria-selected','true');
-      const data = content[btn.dataset.tab];
-      title.textContent = data.title;
-      body.textContent = data.body;
+      showTab(btn.dataset.tab);
     });
   });
+
+  // populate the default (About) tab from the same source of truth on load
+  showTab('about');
 </script>
 
 </body>
