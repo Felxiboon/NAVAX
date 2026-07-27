@@ -1,0 +1,201 @@
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 140px var(--gutter) 120px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero__media {
+  position: absolute;
+  inset: -12% 0 -12%;
+  z-index: -2;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: translate3d(0, var(--shift, 0px), 0) scale(1.04);
+  opacity: 0;
+  transition: opacity 1200ms var(--ease-out);
+  will-change: transform;
+}
+
+.hero.is-loaded .hero__media {
+  opacity: 1;
+}
+
+/* Sits between photo and copy: darkens the top for the fixed header, and
+   dissolves the bottom edge into the page background. */
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(180deg, rgba(5, 13, 9, 0.88) 0%, rgba(5, 13, 9, 0.3) 32%, rgba(5, 13, 9, 0.55) 68%, var(--bg) 100%),
+    linear-gradient(100deg, rgba(5, 13, 9, 0.8), transparent 65%),
+    radial-gradient(120% 70% at 50% 100%, rgba(47, 107, 69, 0.28), transparent 70%);
+}
+
+.hero__inner {
+  position: relative;
+  opacity: var(--fade, 1);
+}
+
+.hero__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 16px 7px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  background: rgba(5, 13, 9, 0.5);
+  backdrop-filter: blur(8px);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  animation: hero-in 900ms var(--ease-out) both;
+}
+
+.hero__pulse {
+  position: relative;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green-bright);
+  box-shadow: 0 0 10px var(--glow);
+}
+
+.hero__pulse::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 1px solid var(--green-bright);
+  animation: pulse-ring 2.4s var(--ease-out) infinite;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+.hero__kicker {
+  margin-top: 26px;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--green-bright);
+  animation: hero-in 900ms var(--ease-out) 120ms both;
+}
+
+.hero__title {
+  margin-top: 10px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--step-hero);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+}
+
+/* Each letter drops in on its own beat. */
+.hero__letter {
+  display: inline-block;
+  animation: letter-in 900ms var(--ease-out) both;
+  animation-delay: calc(220ms + var(--i) * 45ms);
+}
+
+@keyframes letter-in {
+  from { opacity: 0; transform: translate3d(0, 0.35em, 0) rotate(2deg); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes hero-in {
+  from { opacity: 0; transform: translate3d(0, 14px, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+.hero__lede {
+  margin-top: 22px;
+  max-width: 46ch;
+  font-size: var(--step-lede);
+  color: rgba(234, 242, 236, 0.78);
+  text-wrap: pretty;
+  animation: hero-in 900ms var(--ease-out) 620ms both;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 38px;
+  animation: hero-in 900ms var(--ease-out) 760ms both;
+}
+
+/* ── Scroll cue ─────────────────────────────────────────────── */
+
+.hero__cue {
+  position: absolute;
+  left: 50%;
+  bottom: 34px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  opacity: var(--fade, 1);
+  animation: hero-in 900ms var(--ease-out) 1000ms both;
+  transition: color var(--dur) var(--ease-out);
+}
+
+.hero__cue:hover {
+  color: var(--green-soft);
+}
+
+.hero__cue-rail {
+  position: relative;
+  width: 1px;
+  height: 46px;
+  background: linear-gradient(180deg, var(--line-strong), transparent);
+  overflow: hidden;
+}
+
+.hero__cue-dot {
+  position: absolute;
+  left: -1.5px;
+  width: 4px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--green-bright);
+  box-shadow: 0 0 10px var(--glow);
+  animation: cue-travel 2.2s var(--ease) infinite;
+}
+
+@keyframes cue-travel {
+  0% { transform: translateY(-12px); opacity: 0; }
+  35% { opacity: 1; }
+  100% { transform: translateY(46px); opacity: 0; }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding-top: 120px;
+  }
+
+  .hero__actions .btn {
+    flex: 1 1 100%;
+  }
+
+  .hero__cue {
+    display: none;
+  }
+}

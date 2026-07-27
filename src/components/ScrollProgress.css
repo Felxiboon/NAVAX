@@ -1,0 +1,17 @@
+.progress {
+  position: fixed;
+  inset-inline: 0;
+  top: 0;
+  height: 2px;
+  z-index: 120;
+  pointer-events: none;
+  background: rgba(143, 224, 170, 0.08);
+}
+
+.progress__bar {
+  height: 100%;
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  background: linear-gradient(90deg, var(--green), var(--green-bright) 60%, var(--green-soft));
+  box-shadow: 0 0 12px var(--glow);
+}

@@ -1,0 +1,57 @@
+/* Design tokens. Change a value here and it changes everywhere. */
+
+:root {
+  /* ── Surfaces ─────────────────────────────────────────────── */
+  --bg: #050d09;
+  --bg-1: #081410;
+  --bg-2: #0b1c14;
+  --bg-3: #102519;
+
+  /* ── Ink ──────────────────────────────────────────────────── */
+  --ink: #eaf2ec;
+  --ink-dim: #9cb0a2;
+  --ink-faint: #6d8176;
+
+  /* ── Accent ───────────────────────────────────────────────── */
+  --green: #2f6b45;
+  --green-bright: #57c278;
+  --green-soft: #8fe0aa;
+  --glow: rgba(87, 194, 120, 0.45);
+  --glow-soft: rgba(87, 194, 120, 0.16);
+
+  /* ── Lines ────────────────────────────────────────────────── */
+  --line: rgba(143, 224, 170, 0.12);
+  --line-strong: rgba(143, 224, 170, 0.26);
+
+  /* ── Type ─────────────────────────────────────────────────── */
+  --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+
+  --step-hero: clamp(3.2rem, 13vw, 8.5rem);
+  --step-h2: clamp(2rem, 4.6vw, 3.4rem);
+  --step-h3: clamp(1.15rem, 1.8vw, 1.4rem);
+  --step-lede: clamp(1.02rem, 1.5vw, 1.22rem);
+  --step-body: 1rem;
+  --step-label: 0.72rem;
+
+  /* ── Layout ───────────────────────────────────────────────── */
+  --maxw: 1140px;
+  --gutter: clamp(20px, 5vw, 48px);
+  --section-y: clamp(84px, 12vw, 150px);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-pill: 999px;
+
+  /* ── Motion ───────────────────────────────────────────────── */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --dur-fast: 180ms;
+  --dur: 320ms;
+  --dur-slow: 720ms;
+
+  /* ── Elevation ────────────────────────────────────────────── */
+  --shadow-card: 0 24px 60px -32px rgba(0, 0, 0, 0.9);
+  --shadow-glow: 0 18px 44px -20px var(--glow);
+}
